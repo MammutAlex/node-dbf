@@ -63,8 +63,9 @@ Header.prototype.convertBinaryToInteger = function(buffer) {
 
 
 
-function Parser(filename) {
+function Parser(filename,encoding = null) {
     this.filename = filename;
+    this.encoding = encoding;
     this.parseField = this.parseField.bind(this);
     this.parseRecord = this.parseRecord.bind(this);
     this.parse = this.parse.bind(this);
@@ -80,7 +81,7 @@ Parser.prototype.parse = function() {
         var sequenceNumber;
         self.emit('header', self.header);
         sequenceNumber = 0;
-        return fs.readFile(self.filename, function(err, buffer) {
+        return fs.readFile(self.filename, self.encoding, function(err, buffer) {
             var loc;
             if (err) {
                 throw err;
